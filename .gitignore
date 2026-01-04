@@ -40,12 +40,6 @@
 # debug information files
 *.dwo
 
-.vscode/
-.bin/
-
-.CMakeFiles/
-.CMakeCache/
-*.ninja_deps
-*.ninja_log
-*.ninja
-*.cmake
+vscode/
+bin/
+build/
