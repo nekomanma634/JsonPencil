@@ -41,5 +41,11 @@
 *.dwo
 
 .vscode/
-.build/
 .bin/
+
+.CMakeFiles/
+.CMakeCache/
+*.ninja_deps
+*.ninja_log
+*.ninja
+*.cmake
