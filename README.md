@@ -1,5 +1,8 @@
 # JsonPencil
 
+![Status](https://img.shields.io/badge/Status-Work_in_Progress-orange)
+![Status](https://img.shields.io/badge/Status-Experimental-yellow)
+
 ![Language](https://img.shields.io/badge/language-C%2B%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
