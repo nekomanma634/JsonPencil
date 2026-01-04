@@ -1,3 +1,0 @@
-D:/data/Main/JsonPencil/build/CMakeFiles/app.dir
-D:/data/Main/JsonPencil/build/CMakeFiles/edit_cache.dir
-D:/data/Main/JsonPencil/build/CMakeFiles/rebuild_cache.dir
