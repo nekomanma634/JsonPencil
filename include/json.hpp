@@ -11,7 +11,6 @@ class Json {
         const std::string                          _doubleQuote = R"(")";
 
     public:
-
         void ClearJsonData();                                                                   // データを削除
         void Update();                                                                          // josnデータの更新
         void Insert(std::string key, std::variant<int,std::string> value);                      // keyとintの内容
