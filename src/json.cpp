@@ -31,20 +31,6 @@ void Json::Insert(std::string key, std::variant<int,std::string> value){
     }
 }
 
-// void Json::Insert(std::string key, std::string value){               // Insert(string,int)型の方のオーバーロード (この関数は文字列型のみの場合の実装)
-//     std::string _key   = _doubleQuote + key   + _doubleQuote;
-//     std::string _value = _doubleQuote + value + _doubleQuote;
-
-//     if(_word.size() != 0){
-//         _word[_word.size()-1].insert(_word[_word.size()-1].size()-1,",");
-//         std::string s = _key + ": " + _value + "\n";
-
-//         _word.push_back(s);
-//     }else{
-//         _word.push_back(_key + ": " + _value + "\n");
-//     }
-// }
-
 void Json::InsertArray(std::string key, std::vector<std::variant<int,std::string>> value){
     std::string arrayRes = _doubleQuote + key + _doubleQuote + ": " +"[";
 
