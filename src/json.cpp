@@ -1,15 +1,15 @@
 #include "./json.hpp"
 
-Comms::Json::Json(){
+Json::Json(){
     _result.append("{\n");
 }
 
-void Comms::Json::ClearJsonData(){
+void Json::ClearJsonData(){
     _result = "{\n";
     _word = {};
 }
 
-void Comms::Json::Insert(std::string key, int value){
+void Json::Insert(std::string key, int value){
     std::string _key   = _doubleQuote + key + _doubleQuote;                 // jsonで文字列として扱うようダブルクォーテーションで囲む
     std::string _value = std::to_string(value);                             // 整数をstringに変換
 
@@ -23,7 +23,7 @@ void Comms::Json::Insert(std::string key, int value){
     }
 }
 
-void Comms::Json::Insert(std::string key, std::string value){               // Insert(string,int)型の方のオーバーロード (この関数は文字列型のみの場合の実装)
+void Json::Insert(std::string key, std::string value){               // Insert(string,int)型の方のオーバーロード (この関数は文字列型のみの場合の実装)
     std::string _key   = _doubleQuote + key   + _doubleQuote;
     std::string _value = _doubleQuote + value + _doubleQuote;
 
@@ -37,7 +37,35 @@ void Comms::Json::Insert(std::string key, std::string value){               // I
     }
 }
 
-void Comms::Json::Update(){
+void Json::InsertArray(std::string key, std::vector<std::variant<int,std::string>> value){
+    std::string arrayRes = _doubleQuote + key + _doubleQuote + ": " +"[";
+
+    for(int i = 0; i < value.size(); i++){
+        if(i > 0){
+            arrayRes += ", ";
+        }
+
+        if(int* pValueEle = std::get_if<int>(&value[i])){
+            arrayRes += std::to_string(*pValueEle);
+
+        } else if(std::string* pValueEle = std::get_if<std::string>(&value[i])){
+            std::string s = _doubleQuote + *pValueEle + _doubleQuote;
+            arrayRes += s;
+        }
+    }
+
+    arrayRes += "]\n";
+
+    if(_word.size() != 0){
+        _word[_word.size()-1].insert(_word[_word.size()-1].size()-1,",");
+
+        _word.push_back(arrayRes);
+    }else{
+        _word.push_back(arrayRes);
+    }
+}
+
+void Json::Update(){
     for(int i = 0; i < _word.size(); i++){
         _result.append(_word[i]);
     }
@@ -45,6 +73,6 @@ void Comms::Json::Update(){
     _result.append("}");
 }
 
-std::string Comms::Json::GetJsonData(){
+std::string Json::GetJsonData(){
     return _result;
 }
