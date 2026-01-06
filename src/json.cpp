@@ -9,9 +9,17 @@ void Json::ClearJsonData(){
     _word = {};
 }
 
-void Json::Insert(std::string key, int value){
+void Json::Insert(std::string key, std::variant<int,std::string> value){
     std::string _key   = _doubleQuote + key + _doubleQuote;                 // jsonで文字列として扱うようダブルクォーテーションで囲む
-    std::string _value = std::to_string(value);                             // 整数をstringに変換
+    std::string _value;
+
+    if(int* pValue = std::get_if<int>(&value)){
+        _value = std::to_string(*pValue);
+
+    }else if(std::string* pValue = std::get_if<std::string>(&value)){
+        _value = _doubleQuote + *pValue + _doubleQuote;
+        
+    }
 
     if(_word.size() != 0){                                                  // すでに単語があるならば,カンマを前の単語の先頭につける
         _word[_word.size()-1].insert(_word[_word.size()-1].size()-1,",");
@@ -23,19 +31,19 @@ void Json::Insert(std::string key, int value){
     }
 }
 
-void Json::Insert(std::string key, std::string value){               // Insert(string,int)型の方のオーバーロード (この関数は文字列型のみの場合の実装)
-    std::string _key   = _doubleQuote + key   + _doubleQuote;
-    std::string _value = _doubleQuote + value + _doubleQuote;
+// void Json::Insert(std::string key, std::string value){               // Insert(string,int)型の方のオーバーロード (この関数は文字列型のみの場合の実装)
+//     std::string _key   = _doubleQuote + key   + _doubleQuote;
+//     std::string _value = _doubleQuote + value + _doubleQuote;
 
-    if(_word.size() != 0){
-        _word[_word.size()-1].insert(_word[_word.size()-1].size()-1,",");
-        std::string s = _key + ": " + _value + "\n";
+//     if(_word.size() != 0){
+//         _word[_word.size()-1].insert(_word[_word.size()-1].size()-1,",");
+//         std::string s = _key + ": " + _value + "\n";
 
-        _word.push_back(s);
-    }else{
-        _word.push_back(_key + ": " + _value + "\n");
-    }
-}
+//         _word.push_back(s);
+//     }else{
+//         _word.push_back(_key + ": " + _value + "\n");
+//     }
+// }
 
 void Json::InsertArray(std::string key, std::vector<std::variant<int,std::string>> value){
     std::string arrayRes = _doubleQuote + key + _doubleQuote + ": " +"[";
