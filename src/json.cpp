@@ -49,8 +49,13 @@ void Json::InsertArray(std::string key, std::vector<std::variant<int,std::string
             arrayRes += std::to_string(*pValueEle);
 
         } else if(std::string* pValueEle = std::get_if<std::string>(&value[i])){
-            std::string s = _doubleQuote + *pValueEle + _doubleQuote;
-            arrayRes += s;
+            std::string t = *pValueEle;
+            if(t[0] == '['){
+                arrayRes += *pValueEle;
+            }else{
+                std::string s = _doubleQuote + *pValueEle + _doubleQuote;
+                arrayRes += s;
+            }
         }
     }
 
@@ -63,6 +68,28 @@ void Json::InsertArray(std::string key, std::vector<std::variant<int,std::string
     }else{
         _word.push_back(arrayRes);
     }
+}
+
+std::string Json::MakeArray(std::vector<std::variant<int,std::string>> value){
+    std::string res = "[";
+
+    for(int i = 0; i < value.size(); i++){
+        if(i > 0){
+            res += ", ";
+        }
+
+        if(int* pValueEle = std::get_if<int>(&value[i])){
+            res += std::to_string(*pValueEle);
+
+        } else if(std::string* pValueEle = std::get_if<std::string>(&value[i])){
+            std::string s = _doubleQuote + *pValueEle + _doubleQuote;
+            res += s;
+        }
+    }
+
+    res += "]";
+
+    return res;
 }
 
 void Json::Update(){

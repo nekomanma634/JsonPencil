@@ -13,6 +13,7 @@ int main(){
     json.Insert("gakuseki",240124);
     json.Insert("Denwa", "080-4444-444");
     json.InsertArray("array",{"hoge",100,"mican",200,"kotatu",300});
+    json.InsertArray("arrayTes",{json.MakeArray({1,2,3}),json.MakeArray({1,2,"mican"})});
 
     json.Update();
     std::cout << json.GetJsonData();

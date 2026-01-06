@@ -17,6 +17,7 @@ class Json {
         void Insert(std::string key, int value);                                                // keyとintの内容
         void Insert(std::string key, std::string value);                                        // keyとstringの内容
         void InsertArray(std::string key, std::vector<std::variant<int,std::string>> value);    // 配列を追加する関数
+        std::string MakeArray(std::vector<std::variant<int,std::string>> value);                // [1,2,"mican"]のような形の文字列を作成する
         std::string GetJsonData();                                                              // 作成されたjsonデータを出力する
     
         Json();
