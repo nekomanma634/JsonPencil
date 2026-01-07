@@ -9,16 +9,15 @@ void Json::ClearJsonData(){
     _word = {};
 }
 
-void Json::Insert(std::string key, std::variant<int,std::string> value){
+void Json::Insert(std::string key, JsonTypes value){
     std::string _key   = _doubleQuote + key + _doubleQuote;                 // jsonで文字列として扱うようダブルクォーテーションで囲む
     std::string _value;
 
-    if(int* pValue = std::get_if<int>(&value)){
-        _value = std::to_string(*pValue);
-
-    }else if(std::string* pValue = std::get_if<std::string>(&value)){
+    if(std::string* pValue = std::get_if<std::string>(&value)){
         _value = _doubleQuote + *pValue + _doubleQuote;
-        
+
+    }else{
+        _value = std::to_string(std::get<int>(value));
     }
 
     if(_word.size() != 0){                                                  // すでに単語があるならば,カンマを前の単語の先頭につける
@@ -31,7 +30,7 @@ void Json::Insert(std::string key, std::variant<int,std::string> value){
     }
 }
 
-void Json::InsertArray(std::string key, std::vector<std::variant<int,std::string>> value){
+void Json::InsertArray(std::string key, std::vector<JsonTypes> value){
     std::string arrayRes = _doubleQuote + key + _doubleQuote + ": " +"[";
 
     for(int i = 0; i < value.size(); i++){
@@ -64,7 +63,7 @@ void Json::InsertArray(std::string key, std::vector<std::variant<int,std::string
     }
 }
 
-std::string Json::MakeArray(std::vector<std::variant<int,std::string>> value){
+std::string Json::MakeArray(std::vector<JsonTypes> value){
     std::string res = "[";
 
     for(int i = 0; i < value.size(); i++){
